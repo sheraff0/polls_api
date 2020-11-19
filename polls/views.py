@@ -134,7 +134,10 @@ class AnswerViewSet(BaseViewSet):
     def add_answer(self, request, pk=None):
         try:
             question_id = request.data.get('question_id')
-            question = Question.objects.get(pk=question_id)
+            question = Question.objects.get(
+                pk=question_id,
+                poll__in=Poll.objects.active()
+            )
             respondent_id = request.data.get('respondent_id')
             respondent = Respondent.objects.get(pk=respondent_id)
             respondent.polls.add(question.poll)
