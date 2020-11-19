@@ -39,7 +39,6 @@ API entry points:
 `-H 'Content-Type: application/json' \`
 `-d '{"username": "<username>", "password": "<password>"}'`
 
-
 User endpoints (no auth token required):
 -  __/api/polls/active-list/__ - get available polls to current date;
 -  __/api/polls/<id>/get-poll/__ - get complete layout of specified poll;
@@ -54,7 +53,7 @@ User endpoints (no auth token required):
 `-H 'Content-Type: application/json' -d '{"poll_id": <poll_id>}'`
 
 -  __/api/respondents/<uuid>/get-polls/__ - get polls from user's list with complete layout and user's answers;
--  __/api/answers/add-answer/__ - (POST) add answer of a user to a question, specified if posted data:
+-  __/api/answers/add-answer/__ - (POST) add answer of a user to a question, specified in posted data:
 
 `curl -X POST '0.0.0.0:8000/api/answers/add-answer/' \`
 `-d '{"question_id": <question_id>, "respondent_id": "<respondent uuid>", "text": "<text>", "options": [<option_id_1>, <option_id_2>]}' \`
