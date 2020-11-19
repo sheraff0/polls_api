@@ -1,0 +1,7 @@
+<h2>Please enter your credentials</h2>
+<h3>Only authenticated users allowed</h3>
+<form method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit">Enter</button>
+</form>

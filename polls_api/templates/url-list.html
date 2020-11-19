@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<style>
+  a { text-decoration: none }
+  .success a { color: forestgreen }
+  .other a { color: crimson }
+</style>
+{% endblock css %}
+
+{% block content %}
+<h1>Hi!</h1>
+
+{% for url in urls %}
+<div data-id="{{ url.pk }}" data-url="{{ url.url }}" class="other"><a href="{{ url }}">{{ url }}</a></div>
+{% endfor %}
+{% endblock content %}
+
+{% block javascript %}
+<script>
+  const elements = document.querySelectorAll('[data-url]');
+  const element = id => document.querySelector(`[data-id="${id}"]`);
+
+  const urlsList = [...elements].map(el => ({
+    id: el.getAttribute('data-id'),
+    url: el.getAttribute('data-url'),
+  }));
+
+  const fetchData = ({ id }) =>
+    (async () => {
+      const url = `/request-url/${id}`;
+      const response = await fetch(url);
+      if (response instanceof Error) return { error: response };
+      return response.status;
+    })();
+  
+  urlsList.forEach(item => {
+    const id = item.id;
+    const el = element(id);
+    fetchData({ id })
+      .then(status => {
+        if (status === 200) {
+          el.classList.add('success');
+          el.classList.remove('other');
+        }
+      });
+  });
+</script>
+{% endblock javascript %}
